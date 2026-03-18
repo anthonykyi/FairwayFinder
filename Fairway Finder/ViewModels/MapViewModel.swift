@@ -12,10 +12,16 @@ import Combine
 class MapViewModel: ObservableObject {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // MARK: - Published State
 
     @Published var currentCourse: GolfCourse?
     @Published var holeFeatures: [HoleFeature] = []
+=======
+    @Published var course: GolfCourse?
+    @Published var holeFeatures: [HoleFeature] = []
+    @Published var currentHole: GolfHole?
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
     @Published var course: GolfCourse?
     @Published var holeFeatures: [HoleFeature] = []
@@ -26,6 +32,7 @@ class MapViewModel: ObservableObject {
     @Published var middleYardage: Double?
     @Published var backYardage: Double?
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @Published var rawYardage: Double?
     @Published var adjustedYardage: Double?
@@ -80,6 +87,8 @@ class MapViewModel: ObservableObject {
     // MARK: - Green Yardages (Front / Middle / Back)
 
 =======
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
     @Published var yardage: Double?
     @Published var adjustedYardage: Double?
     @Published var rawYardage: Double?
@@ -120,6 +129,9 @@ class MapViewModel: ObservableObject {
         }
     }
 
+<<<<<<< HEAD
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
     func updateGreenYardages(
         playerLocation: CLLocation,
@@ -127,7 +139,11 @@ class MapViewModel: ObservableObject {
     ) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         let frontLocation =
+=======
+        let frontLoc =
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
         let frontLoc =
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
@@ -137,7 +153,11 @@ class MapViewModel: ObservableObject {
         )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         let middleLocation =
+=======
+        let midLoc =
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
         let midLoc =
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
@@ -147,7 +167,11 @@ class MapViewModel: ObservableObject {
         )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         let backLocation =
+=======
+        let backLoc =
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
         let backLoc =
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
@@ -156,6 +180,7 @@ class MapViewModel: ObservableObject {
             longitude: yardages.back.longitude
         )
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         let frontMeters =
         playerLocation.distance(from: frontLocation)
@@ -181,6 +206,8 @@ class MapViewModel: ObservableObject {
 
     // MARK: - Tap Target Distance
 =======
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
         DispatchQueue.main.async {
 
             self.frontYardage =
@@ -203,6 +230,9 @@ class MapViewModel: ObservableObject {
             self.currentCourse = detectedCourse
         }
     }
+<<<<<<< HEAD
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 
     func calculateDistance(
@@ -223,7 +253,11 @@ class MapViewModel: ObservableObject {
         YardageCalculator.yards(from: meters)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         let elevationDifference =
+=======
+        let elevationDiff =
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
         let elevationDiff =
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
@@ -238,7 +272,11 @@ class MapViewModel: ObservableObject {
         YardageCalculator.slopeAdjusted(
             distance: yards,
 <<<<<<< HEAD
+<<<<<<< HEAD
             elevationDiff: elevationDifference
+=======
+            elevationDiff: elevationDiff
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
             elevationDiff: elevationDiff
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
@@ -249,6 +287,10 @@ class MapViewModel: ObservableObject {
             self.rawYardage = yards
             self.adjustedYardage = adjusted
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            self.yardage = adjusted
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
             self.yardage = adjusted
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83

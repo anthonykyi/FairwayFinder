@@ -244,7 +244,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = KPVXK9S7CY;
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 				ENABLE_PREVIEWS = YES;
@@ -281,7 +284,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = KPVXK9S7CY;
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 				ENABLE_PREVIEWS = YES;

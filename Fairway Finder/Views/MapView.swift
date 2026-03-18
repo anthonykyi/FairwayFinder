@@ -12,18 +12,24 @@ import CoreLocation
 struct MapView: View {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @ObservedObject var viewModel: MapViewModel
     @StateObject private var locationManager = LocationManager()
 
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var target: CLLocationCoordinate2D?
 =======
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
     @StateObject private var locationManager = LocationManager()
     @StateObject private var viewModel = MapViewModel()
     
 
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var targetPin: CLLocationCoordinate2D?
+<<<<<<< HEAD
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 
     var body: some View {
@@ -36,6 +42,7 @@ struct MapView: View {
 
                     // Player location
                     UserAnnotation()
+<<<<<<< HEAD
 <<<<<<< HEAD
                     
                     if let target,
@@ -96,6 +103,8 @@ struct MapView: View {
                                         .fill(.cyan)
                                         .frame(width: 10, height: 10)
 =======
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 
                     // Target flag
                     if let pin = targetPin {
@@ -161,6 +170,9 @@ struct MapView: View {
                                     Circle()
                                         .fill(.cyan)
                                         .frame(width: 12, height: 12)
+<<<<<<< HEAD
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
                                 }
                             }
@@ -168,9 +180,14 @@ struct MapView: View {
                     }
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                 // Tap anywhere on map
                 .gesture(
+=======
+                .gesture(
+
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
                 .gesture(
 
@@ -183,6 +200,7 @@ struct MapView: View {
                             if let coordinate =
                                 proxy.convert(point, from: .local) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                                 target = coordinate
 
@@ -199,12 +217,21 @@ struct MapView: View {
 =======
                                 addTarget(coordinate)
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
+                                addTarget(coordinate)
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
                             }
                         }
                 )
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             
+=======
+            .ignoresSafeArea()
+
+            // UI Overlay
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
             .ignoresSafeArea()
 
@@ -218,6 +245,7 @@ struct MapView: View {
 
                     Button {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                         if let location = locationManager.location {
 
@@ -234,13 +262,20 @@ struct MapView: View {
 =======
                         recenter()
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
+                        recenter()
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 
                     } label: {
 
                         Image(systemName: "location.fill")
                             .font(.title2)
 <<<<<<< HEAD
+<<<<<<< HEAD
                             .padding()
+=======
+                            .padding(12)
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 =======
                             .padding(12)
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
@@ -248,6 +283,7 @@ struct MapView: View {
                             .clipShape(Circle())
                             .shadow(radius: 4)
                     }
+<<<<<<< HEAD
 <<<<<<< HEAD
                     .padding()
                 }
@@ -336,6 +372,8 @@ struct MapView: View {
         }
     }
 =======
+=======
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
                 }
 
                 Spacer()
@@ -406,5 +444,8 @@ struct MapView: View {
             )
         )
     }
+<<<<<<< HEAD
+>>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
+=======
 >>>>>>> 69b2df51311e20ad931856d3647fafabbc3a2a83
 }
