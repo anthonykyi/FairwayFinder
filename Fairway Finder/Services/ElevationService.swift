@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
  
 class ElevationService {
  
@@ -16,6 +17,11 @@ class ElevationService {
         return URLSession(configuration: config)
     }()
  
+    // Cache player elevation for 1 minute
+    private var cachedPlayerElevation: Double?
+    private var cacheTimestamp: Date?
+    private let cacheDuration: TimeInterval = 60
+ 
     func elevation(lat: Double, lon: Double) async -> Double? {
         let urlString = "https://epqs.nationalmap.gov/v1/json?x=\(lon)&y=\(lat)&wkid=4326&units=Feet&includeDate=false"
         guard let url = URL(string: urlString) else { return nil }
@@ -23,13 +29,8 @@ class ElevationService {
         do {
             let (data, response) = try await session.data(from: url)
  
-            // Log raw response for debugging
-            let rawString = String(data: data, encoding: .utf8) ?? "unreadable"
-            print("USGS raw response: \(rawString)")
- 
             guard let http = response as? HTTPURLResponse,
                   http.statusCode == 200 else {
-                print("USGS bad status: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
                 return nil
             }
  
@@ -44,15 +45,39 @@ class ElevationService {
         return nil
     }
  
+    func playerElevation(location: CLLocation) async -> Double? {
+ 
+        // Return cached value if under 1 minute old
+        if let cached = cachedPlayerElevation,
+           let timestamp = cacheTimestamp,
+           Date().timeIntervalSince(timestamp) < cacheDuration {
+            print("Using cached player elevation: \(cached)ft")
+            return cached
+        }
+ 
+        // Fetch fresh elevation and cache it
+        let elev = await elevation(
+            lat: location.coordinate.latitude,
+            lon: location.coordinate.longitude
+        )
+ 
+        if let elev {
+            cachedPlayerElevation = elev
+            cacheTimestamp = Date()
+            print("Fetched fresh player elevation: \(elev)ft")
+        }
+ 
+        return elev
+    }
+ 
     func elevationDifference(
-        userLat: Double,
-        userLon: Double,
+        userLocation: CLLocation,
         targetLat: Double,
         targetLon: Double
     ) async -> Double {
  
-        // Sequential calls to avoid task cancellation
-        let userElev = await elevation(lat: userLat, lon: userLon)
+        // Use cached player elevation where possible
+        let userElev = await playerElevation(location: userLocation)
         let targetElev = await elevation(lat: targetLat, lon: targetLon)
  
         guard let user = userElev, let target = targetElev else {
@@ -60,7 +85,8 @@ class ElevationService {
             return 0
         }
  
-        print("User elevation: \(user)ft, Target elevation: \(target)ft, Diff: \(target - user)ft")
-        return target - user
+        let diff = target - user
+        print("Player: \(user)ft, Target: \(target)ft, Diff: \(diff)ft")
+        return diff
     }
 }

@@ -22,6 +22,7 @@ class MapViewModel: ObservableObject {
  
     @Published var rawYardage: Double?
     @Published var adjustedYardage: Double?
+    @Published var slopeMetrics: SlopeMetrics?
  
     // MARK: - Green Selector
  
@@ -170,22 +171,21 @@ class MapViewModel: ObservableObject {
  
         let elevationDifference =
         await elevationService.elevationDifference(
-            userLat: userLocation.coordinate.latitude,
-            userLon: userLocation.coordinate.longitude,
+            userLocation: userLocation,
             targetLat: target.latitude,
             targetLon: target.longitude
         )
  
-        let adjusted =
-        YardageCalculator.slopeAdjusted(
+        let metrics =
+        YardageCalculator.slopeMetrics(
             distance: yards,
             elevationDiff: elevationDifference
         )
  
         DispatchQueue.main.async {
- 
             self.rawYardage = yards
-            self.adjustedYardage = adjusted
+            self.adjustedYardage = metrics.effectiveDistance
+            self.slopeMetrics = metrics
         }
     }
 }

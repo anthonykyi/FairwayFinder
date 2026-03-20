@@ -127,11 +127,23 @@ struct MapView: View {
                                 if let tappedGreen = viewModel.holeFeatures.first(where: {
                                     $0.type == .green && isPoint(coordinate, insidePolygon: $0.coordinates)
                                 }) {
-                                    // Tapped a green — select it and update yardages
-                                    viewModel.greenSelector.selectGreen(tappedGreen)
- 
-                                    if let location = locationManager.location {
-                                        viewModel.updateAutoGreenYardages(playerLocation: location)
+                                    if viewModel.greenSelector.selectedGreen?.id == tappedGreen.id {
+                                        // Already selected — place flag on this spot for precise distance
+                                        target = coordinate
+                                        if let userLocation = locationManager.location {
+                                            Task {
+                                                await viewModel.calculateDistance(
+                                                    userLocation: userLocation,
+                                                    target: coordinate
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        // Different green — select it and update yardages
+                                        viewModel.greenSelector.selectGreen(tappedGreen)
+                                        if let location = locationManager.location {
+                                            viewModel.updateAutoGreenYardages(playerLocation: location)
+                                        }
                                     }
  
                                 } else {
@@ -196,17 +208,6 @@ struct MapView: View {
  
                 VStack(spacing: 6) {
  
-                    // Selected green indicator
-                    if let selected = viewModel.greenSelector.selectedGreen {
-                        Text("Hole \(selected.holeNumber)")
-                            .font(.caption)
-                            .foregroundColor(.green)
-                    } else {
-                        Text("Tap a green to select")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
- 
                     if let adjusted = viewModel.adjustedYardage {
  
                         Text("Plays Like: \(Int(adjusted)) yd")
@@ -218,6 +219,32 @@ struct MapView: View {
  
                         Text("Actual: \(Int(raw)) yd")
                             .font(.subheadline)
+                    }
+ 
+                    // Slope metrics
+                    if let metrics = viewModel.slopeMetrics {
+ 
+                        HStack(spacing: 20) {
+ 
+                            VStack(spacing: 2) {
+                                Text("Grade")
+                                    .font(.caption2)
+                                    .foregroundColor(.gray)
+                                Text(String(format: "%.1f%%", metrics.grade))
+                                    .font(.caption)
+                                    .bold()
+                            }
+ 
+                            VStack(spacing: 2) {
+                                Text("Angle")
+                                    .font(.caption2)
+                                    .foregroundColor(.gray)
+                                Text(String(format: "%.1f°", metrics.angle))
+                                    .font(.caption)
+                                    .bold()
+                            }
+                        }
+                        .padding(.top, 4)
                     }
  
                     if let front = viewModel.frontYardage,
@@ -265,7 +292,6 @@ struct MapView: View {
             Task {
                 await viewModel.detectCourse(userLocation: location)
                 await viewModel.loadCourseFeatures(userLocation: location)
-                // Update yardages after features are loaded
                 viewModel.updateAutoGreenYardages(playerLocation: location)
             }
  
@@ -280,5 +306,6 @@ struct MapView: View {
                     )
                 )
         }
+ 
     }
 }
